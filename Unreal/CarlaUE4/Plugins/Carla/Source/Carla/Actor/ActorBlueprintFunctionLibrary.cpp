@@ -230,13 +230,21 @@ static void AddVariationsForSensor(FActorDefinition &Def)
   Def.Variations.Emplace(Tick);
 }
 
+FActorDefinition UActorBlueprintFunctionLibrary::MakeGenericDefinition(
+    const FString &Category,
+    const FString &Type,
+    const FString &Id)
+{
+  FActorDefinition Definition;
+  FillIdAndTags(Definition, Category, Type, Id);
+  return Definition;
+}
 
 FActorDefinition UActorBlueprintFunctionLibrary::MakeGenericSensorDefinition(
     const FString &Type,
     const FString &Id)
 {
-  FActorDefinition Definition;
-  FillIdAndTags(Definition, TEXT("sensor"), Type, Id);
+  auto Definition = MakeGenericDefinition(TEXT("sensor"), Type, Id);
   AddRecommendedValuesForSensorRoleNames(Definition);
   return Definition;
 }
