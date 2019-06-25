@@ -144,8 +144,8 @@ namespace detail {
       _episode->RegisterOnTickEvent(std::move(callback));
     }
 
-    void Tick() {
-      _client.SendTickCue();
+    uint64_t Tick() {
+      return _client.SendTickCue();
     }
 
     /// @}
@@ -162,8 +162,8 @@ namespace detail {
       return _client.GetEpisodeSettings();
     }
 
-    void SetEpisodeSettings(const rpc::EpisodeSettings &settings) {
-      _client.SetEpisodeSettings(settings);
+    uint64_t SetEpisodeSettings(const rpc::EpisodeSettings &settings) {
+      return _client.SetEpisodeSettings(settings);
     }
 
     rpc::WeatherParameters GetWeatherParameters() {

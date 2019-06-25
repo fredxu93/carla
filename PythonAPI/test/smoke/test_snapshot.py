@@ -23,10 +23,12 @@ class TestSnapshot(SyncSmokeTest):
         ids = [x.actor_id for x in response]
         self.assertEqual(len(ids), len(spawn_points))
 
-        self.world.tick()
-        snapshot = self.world.wait_for_tick()
+        frame = self.world.tick()
 
-        self.assertTrue(snapshot == self.world.get_snapshot())
+        while frame > self.world.get_snapshot().timestamp.frame:
+            pass
+        snapshot = self.world.get_snapshot()
+        self.assertEqual(frame, snapshot.timestamp.frame)
 
         actors = self.world.get_actors()
         self.assertTrue(all(snapshot.has_actor(x.id) for x in actors))
